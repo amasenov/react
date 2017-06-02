@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test Aleks</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <div id="react-app"></div>
+
+    <script type="text/babel">
+      /*
+       * Code for tabs
+       */
+      const Tabs = React.createClass({
+        displayName: 'Tabs',
+        propTypes: {
+          selected: React.PropTypes.number,
+          children: React.PropTypes.oneOfType([
+            React.PropTypes.array,
+            React.PropTypes.element
+          ]).isRequired
+        },
+        getDefaultProps() {
+          return {
+            selected: 0
+          };
+        },
+        getInitialState() {
+          return {
+            selected: this.props.selected
+          };
+        },
+        handleClick(index, event) {
+          event.preventDefault();
+          this.setState({
+            selected: index
+          });
+        },
+        _renderTitles() {
+          function labels(child, index) {
+            let activeClass = (this.state.selected === index ? 'nav-item active' : 'nav-item');
+            return (
+              <li key={index} role="presentation" className={activeClass}>
+                <a className="nav-link" href="#" 
+                  onClick={this.handleClick.bind(this, index)}>
+                  {child.props.label}
+                </a>
+              </li>
+            );
+          }
+          return (
+          
+            <nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+              <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <a className="navbar-brand" href="#">Navbar</a>
+              <div className="collapse navbar-collapse" id="navbarColor01">
+                <ul className="navbar-nav mr-auto">
+                  {this.props.children.map(labels.bind(this))}
+                </ul>
+              </div>
+            </nav>
+          );
+        },
+        _renderContent() {
+          return (
+            <div className="tabs__content">
+              {this.props.children[this.state.selected]}
+            </div>
+          );
+        },
+        render() {
+          return (
+            <div className="tabs">
+              {this._renderTitles()}
+              {this._renderContent()}
+            </div>
+          );
+        }
+      });
+
+      /*
+       * First Tab Body - img/amazon.jpg
+       */
+
+       function RegForm() {
+        return (
+          <img className=""
+               src='img/amazon.jpg'
+               alt='img/amazon.jpg' />
+        );
+      }
+       function LogForm() {
+        return (
+          <img className=""
+               src='img/amazon.jpg'
+               alt='img/amazon.jpg' />
+        );
+      }
+       function QuestionForm() {
+        return (
+          <img className=""
+               src='img/amazon.jpg'
+               alt='img/amazon.jpg' />
+        );
+      }
+
+      function ItemBubbles() {
+        return (
+          <ul className="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        );
+      }
+
+      function ItemForm(props) {
+        return (
+          <div className="thumbnail">
+            <div className="caption">
+              <h3>{props.item.title}</h3>
+              <p>{props.item.text}</p>
+              
+              <p>
+                <a href="#" className="btn btn-primary" role="button">Open</a> <a href="#" className="btn btn-default" role="button">Close</a>
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      function Item(props) {
+        return (
+          <div className="wrapper">
+            <ItemForm item={props.item} />
+            <ItemBubbles/>
+          </div>
+        );
+      }
+
+      const item1 = {
+        item: {
+          text: <RegForm/>,
+          title: 'Registration',
+          phpUrl: 'registration.php'
+        }
+      };
+
+      const item2 = {
+        item: {
+          text: <LogForm/>,
+          title: 'Log In',
+          phpUrl: 'logging.php'
+        }
+      };
+
+      const item3 = {
+        item: {
+          text: <QuestionForm/>,
+          title: 'Please fill in your new password!',
+          phpUrl: 'changingPass.php'
+        }
+      };
+
+
+      /*
+       * Dispay Tabs
+       */
+      const Pane = React.createClass({
+        displayName: 'Pane',
+        propTypes: {
+          label: React.PropTypes.string.isRequired,
+          children: React.PropTypes.element.isRequired
+        },
+        render() {
+          return (
+            <div>
+              {this.props.children}
+            </div>
+          );
+        }
+      });
+
+      const App = React.createClass({
+        render() {
+          return (
+            <div>
+              <Tabs selected={0}>
+                <Pane label="Home">
+                  <div>
+                    <Item item={item1.item} />
+                  </div>
+                </Pane>
+                <Pane label="Profile">
+                  <div>
+                    <Item item={item2.item} />
+                  </div>
+                </Pane>
+                <Pane label="Contact">
+                  <div>
+                    <Item item={item3.item} />
+                  </div>
+                </Pane>
+              </Tabs>
+            </div>
+          );
+        }
+      });
+       
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>
