@@ -1,7 +1,5 @@
 import _ from "lodash";
 import React, { Component } from 'react';
-import logo from './../logo.svg';
-import ReactDOM from "react-dom";
 import YTSearch from "youtube-api-search";
 import SearchBar from './search_bar';
 import VideoList from "./video_list";
@@ -17,7 +15,7 @@ class App extends Component {
       selectedVideo: null
     };
 
-    this.videoSearch("surfboards");
+    this.videoSearch("marshmello");
   }
     
     videoSearch(term) {
