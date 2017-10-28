@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { Component } from 'react';
+import logo from './../logo.svg';
 import YTSearch from "youtube-api-search";
 import SearchBar from './search_bar';
 import VideoList from "./video_list";
@@ -34,6 +35,12 @@ class App extends Component {
 
     return (
       <div>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Welcome to Video App</h1>
+          </header>
+        </div>
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
